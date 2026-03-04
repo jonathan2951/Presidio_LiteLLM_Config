@@ -1,0 +1,70 @@
+model_list:
+  - model_name: gpt-4
+    litellm_params:
+      model: gpt-4
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: gpt-5.1
+    litellm_params:
+      model: gpt-5.1
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: gpt-4o
+    litellm_params:
+      model: gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: gpt-3.5-turbo
+    litellm_params:
+      model: gpt-3.5-turbo
+      api_key: os.environ/OPENAI_API_KEY
+
+litellm_settings:
+  drop_params: true
+  set_verbose: true
+
+guardrails:
+  - guardrail_name: "presidio-pii-guard-testing"
+    litellm_params:
+      guardrail: presidio
+      mode: "pre_call"
+      default_on: true
+      presidio_analyzer_api_base: "http://presidio-analyzer:3000"
+      presidio_anonymizer_api_base: "http://presidio-anonymizer:3000"
+      presidio_score_thresholds:
+        CREDIT_CARD: 0.1
+        CRYPTO: 0.1
+        DATE_TIME: 0.1
+        EMAIL_ADDRESS: 0.1
+        IBAN_CODE: 0.1
+        IP_ADDRESS: 0.1
+        MAC_ADDRESS: 0.1
+        NRP: 0.1
+        LOCATION: 0.1
+        PERSON: 0.1
+        PHONE_NUMBER: 0.1
+        MEDICAL_LICENSE: 0.1
+        URL: 0.1
+        US_BANK_NUMBER: 0.1
+        US_DRIVER_LICENSE: 0.1
+        US_ITIN: 0.1
+        US_MBI: 0.1
+        US_PASSPORT: 0.1
+        US_SSN: 0.1
+      pii_entities_config:
+        CREDIT_CARD: "MASK"
+        CRYPTO: "MASK"
+        DATE_TIME: "MASK"
+        EMAIL_ADDRESS: "MASK"
+        IBAN_CODE: "MASK"
+        IP_ADDRESS: "MASK"
+        MAC_ADDRESS: "MASK"
+        NRP: "MASK"
+        LOCATION: "MASK"
+        PERSON: "MASK"
+        PHONE_NUMBER: "MASK"
+        MEDICAL_LICENSE: "MASK"
+        URL: "MASK"
+        US_BANK_NUMBER: "MASK"
+        US_DRIVER_LICENSE: "MASK"
+        US_ITIN: "MASK"
+        US_MBI: "MASK"
+        US_PASSPORT: "MASK"
+        US_SSN: "MASK"
