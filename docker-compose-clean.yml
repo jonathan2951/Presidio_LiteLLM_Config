@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  presidio-analyzer:
+    image: mcr.microsoft.com/presidio-analyzer:latest
+    ports:
+      - "5002:3000"
+    environment:
+      - GRPC_PORT=5001
+    networks:
+      - presidio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  presidio-anonymizer:
+    image: mcr.microsoft.com/presidio-anonymizer:latest
+    ports:
+      - "5001:3000"
+    networks:
+      - presidio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LITELLM_LOG=DEBUG
+      - PRESIDIO_ANALYZER_API_BASE=http://presidio-analyzer:3000
+      - PRESIDIO_ANONYMIZER_API_BASE=http://presidio-anonymizer:3000
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "8", "--detailed_debug"]
+    networks:
+      - presidio-network
+    depends_on:
+      presidio-analyzer:
+        condition: service_healthy
+      presidio-anonymizer:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  presidio-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
