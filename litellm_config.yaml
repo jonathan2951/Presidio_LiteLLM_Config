@@ -29,25 +29,25 @@ guardrails:
       presidio_analyzer_api_base: "http://presidio-analyzer:3000"
       presidio_anonymizer_api_base: "http://presidio-anonymizer:3000"
       presidio_score_thresholds:
-        CREDIT_CARD: 0.1
-        CRYPTO: 0.1
-        DATE_TIME: 0.1
-        EMAIL_ADDRESS: 0.1
-        IBAN_CODE: 0.1
-        IP_ADDRESS: 0.1
-        MAC_ADDRESS: 0.1
-        NRP: 0.1
-        LOCATION: 0.1
-        PERSON: 0.1
-        PHONE_NUMBER: 0.1
-        MEDICAL_LICENSE: 0.1
-        URL: 0.1
-        US_BANK_NUMBER: 0.1
-        US_DRIVER_LICENSE: 0.1
-        US_ITIN: 0.1
-        US_MBI: 0.1
-        US_PASSPORT: 0.1
-        US_SSN: 0.1
+        CREDIT_CARD: 0.9
+        CRYPTO: 0.9
+        DATE_TIME: 0.9
+        EMAIL_ADDRESS: 0.9
+        IBAN_CODE: 0.9
+        IP_ADDRESS: 0.9
+        MAC_ADDRESS: 0.9
+        NRP: 0.9
+        LOCATION: 0.9
+        PERSON: 0.9
+        PHONE_NUMBER: 0.9
+        MEDICAL_LICENSE: 0.9
+        URL: 0.9
+        US_BANK_NUMBER: 0.9
+        US_DRIVER_LICENSE: 0.9
+        US_ITIN: 0.9
+        US_MBI: 0.9
+        US_PASSPORT: 0.9
+        US_SSN: 0.9
       pii_entities_config:
         CREDIT_CARD: "MASK"
         CRYPTO: "MASK"
